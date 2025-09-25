@@ -17,9 +17,7 @@ metadata:
     Before you get started, please gather:
     
     1. 
-    1. 
-    1. 
-    
+      
     When you are finished, you will need to:
     
     1. 
@@ -89,9 +87,8 @@ code: |
   move_out
   security_deposit_value
   lease_rate_know
-  if lease_rate_know:
-    known_rate
   set_progress(25)
+  interest_display
   other_parties[0].address.address
   other_parties.gather()
   users[0].address.address
@@ -129,7 +126,7 @@ subquestion: |
   
   Before you get started, please gather:
   
-  1. 
+  1. The lease for the property which you want your security deposit back from
   1. 
   1. 
   
@@ -153,10 +150,10 @@ fields:
 ---
 id: security deposit interest check
 question: |
-  Check your lease – your lease may specify an interest rate higher than the law requires!
+  What is the interest rate that is specified in your lease?
 fields:
-  - Specified interest rate?: known_rate
-    datatype: yesnoradio
+  - Rate: known_rate
+    datatype: number
 ---
 id: When did you move into the rental?
 question: |
@@ -167,7 +164,7 @@ fields:
 ---
 id: When did you move out of the rental?
 question: |
-  When did you leave ${ rental_address.address }:
+  When was the last day you lived at ${ rental_address.address }:
 fields:
   - "Date": move_out
     datatype: date
@@ -194,13 +191,35 @@ fields:
   - Lease rate: lease_rate
     datatype: number
 ---
-id: 
+code: |
+  def rate_value(val):
+      return val/100 if val else 0.01
+
+  final_rate = rate_value(lease_rate if lease_rate_know else None)
+
+  months = 0
+  d = move_in
+  while d < move_out:
+      months += 1
+      d = d.replace(month=d.month + 1 if d.month < 12 else 1, year=d.year if d.month < 12 else d.year + 1)
+
+  total = security_deposit_value
+  for i in range(months):
+      total *= (1 + final_rate)
+
+  interest_earned = total - security_deposit_value
+  security_deposit_value_interest = total
+
+---
+id: interest_display
 question: |
-  This is the amount of your security deposit, including interest.
-fields:
-  - "Security deposit value interest": security_deposit_value_interest
-    datatype: currency
-    min: 0
+  Security deposit with interest
+subquestion: |
+  Based on your move-in and move-out dates, the total interest earned is **${ currency(interest_earned) }**.
+
+  Your security deposit plus interest is **${ currency(security_deposit_value_interest) }**.
+continue button field: interest_display
+
 ---
 id: preview request_for_security_deposit
 question: |
