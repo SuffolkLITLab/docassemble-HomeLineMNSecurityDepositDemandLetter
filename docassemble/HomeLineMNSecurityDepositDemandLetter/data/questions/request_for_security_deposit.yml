@@ -139,6 +139,21 @@ subquestion: |
 
   Most people take about 10 minutes to complete this interview.
 ---
+id: any other users
+question: |
+  % if al_form_type in ['starts_case','existing_case','appeal']:
+  Is anyone else on your side of this case?
+  % else:
+  Are any other tenants adding their name to this form with you?
+  % endif
+subquestion: |
+  % if len(users.elements) > 1:  
+  So far you have told us about ${comma_and_list(users.complete_elements())}.
+  % endif
+fields:
+  - no label: users.there_is_another
+    datatype: yesnoradio
+---
 id: What is the address of the rental property?
 question: |
   What is the address of the rental property?
