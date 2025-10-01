@@ -81,6 +81,7 @@ code: |
   user_role = "plaintiff"
   user_ask_role = "plaintiff"
   users.gather()
+  users[0].address.address
   rental_address
   other_parties[0].address.address
   other_parties.gather()
@@ -91,7 +92,6 @@ code: |
   lease_rate_know
   set_progress(25)
   interest_display
-  users[0].address.address
   users[0].signature
   set_progress(50)
   signature_date
