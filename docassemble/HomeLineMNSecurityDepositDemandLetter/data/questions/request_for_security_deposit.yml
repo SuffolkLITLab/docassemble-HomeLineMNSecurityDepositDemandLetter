@@ -83,8 +83,8 @@ code: |
   users.gather()
   users[0].address.address
   rental_address
-  other_parties[0].address.address
-  other_parties.gather()
+  landlord_name
+  other_parties[0].address.address()
   set_parts(subtitle=str(users))
   move_in
   move_out
@@ -92,7 +92,7 @@ code: |
   lease_rate_know
   set_progress(25)
   interest_display
-  users[0].signature
+  basic_questions_signature_flow
   set_progress(50)
   signature_date
   interview_order_request_for_security_deposit = True
@@ -144,7 +144,7 @@ question: |
   % if al_form_type in ['starts_case','existing_case','appeal']:
   Is anyone else on your side of this case?
   % else:
-  Are any other tenants adding their name to this form with you?
+  Are any other tenants adding their name to this letter with you?
   % endif
 subquestion: |
   % if len(users.elements) > 1:  
@@ -162,6 +162,47 @@ fields:
   - City: rental_address.city
   - State: rental_address.state
   - Zip code: rental_address.zip
+---
+id: user i's address
+question: |
+  % if i == 0 and al_person_answering == "user":
+  What is your current address?
+  % else:
+  What is ${ users[i] }'s current address?
+  % endif
+fields:
+  - label: |
+      % if i > 0 and al_person_answering == "user":
+      Same as your address
+      % else:
+      Same as ${ users[0] }'s address
+      % endif
+    field: users[i].address
+    datatype: object_radio
+    choices:
+      - users[0].address if defined("users[0].address.address") else None
+    object labeler: |
+      lambda y: y.on_one_line()      
+    none of the above: |
+      Somewhere else
+    disable others: True
+    show if:
+      code: |
+        i > 0 and defined("users[0].address.address")
+  - ${ users[i].address.address_label}: users[i].address.address
+    address autocomplete: True
+  - ${ users[i].address.unit_label}: users[i].address.unit
+    required: False
+  - ${ users[i].address.city_label}: users[i].address.city
+  - ${ users[i].address.state_label}: users[i].address.state
+    code: |
+      states_list(country_code=AL_DEFAULT_COUNTRY)
+    default: ${ AL_DEFAULT_STATE }
+  - ${ users[i].address.zip_label}: users[i].address.zip
+    required: False
+#  - ${ users[i].address.country_label}: users[i].address.country
+#    code: countries_list()
+#    default: ${ AL_DEFAULT_COUNTRY }
 ---
 id: security deposit interest check
 question: |
@@ -235,22 +276,14 @@ subquestion: |
   Your security deposit plus interest is **${ currency(security_deposit_value_interest) }**.
 continue button field: interest_display
 ---
-sets:
-  - other_parties[i].name.first
-  - other_parties[i].name.last
-  - other_parties[i].name.middle
-  - other_parties[i].name.suffix
-id: names of opposing parties
+id: landlord name
 question: |
-  % if user_started_case:
-  Name of the **Landord** in this
-  matter
-  % else:
-  Name of ${ ordinal(i) } **plaintiff** or petitioner in this matter
-  % endif
+  What is your landlord's name?
 fields:
-  - code: |
-      other_parties[i].name_fields(person_or_business='unsure')
+  - no label: landlord_name
+---
+code: |
+  other_parties[0].name.first = landlord_name
 ---
 id: preview request_for_security_deposit
 question: |
