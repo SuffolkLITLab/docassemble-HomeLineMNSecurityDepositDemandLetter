@@ -82,9 +82,9 @@ code: |
   user_ask_role = "plaintiff"
   users.gather()
   users[0].address.address
-  rental_address
+  rental_address.address
   landlord_name
-  other_parties[0].address.address()
+  other_parties[0].address.address
   set_parts(subtitle=str(users))
   move_in
   move_out
@@ -156,7 +156,7 @@ fields:
 ---
 id: What is the address of the rental property?
 question: |
-  What is the address of the rental property?
+  What is the address of the rental you want your deposit back from?
 fields:
   - Street address: rental_address.address
   - City: rental_address.city
