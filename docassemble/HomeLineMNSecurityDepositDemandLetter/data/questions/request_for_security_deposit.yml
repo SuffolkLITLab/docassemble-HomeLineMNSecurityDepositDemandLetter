@@ -213,39 +213,35 @@ fields:
 ---
 id: When did you move into the rental?
 question: |
-  When did your lease start at ${ rental_address.address }:
+  When did your lease start ${ rental_address.address }?
 fields:
-  - "Date": move_in
+  - "Lease began on": move_in
     datatype: date
 ---
 id: When did you move out of the rental?
 question: |
-  When was the last day you lived at ${ rental_address.address }:
+  When did your lease end at ${ rental_address.address }?
 fields:
-  - "Date": move_out
+  - "Lease ended on": move_out
     datatype: date
 ---
 id: pay for sec depo
 question: |
   How much did you pay for your security deposit?
 fields:
-  - "Deposit": security_deposit_value
+  - "Deposit amount": security_deposit_value
     datatype: currency
     min: 0
 ---
 id: Lease rate Q
 question: |
-  Check your lease, does it specify an interest rate for your security deposit?
+  Check your lease for the interest rate on your security deposit. Most leases will not. If your lease does not, this form will use the legally required default 
 fields:
-  - "My lease specifies": lease_rate_know
+  - "The lease has security deposit interest rate": lease_rate_know
     datatype: yesnoradio
----
-id: Lease rate q2
-question: |
-  What is the interest rate that your lease specifies for the interest rate of your deposit?
-fields:
   - Lease rate: lease_rate
     datatype: number
+    show if: lease_rate_know
 ---
 code: |
   def rate_value(val):
