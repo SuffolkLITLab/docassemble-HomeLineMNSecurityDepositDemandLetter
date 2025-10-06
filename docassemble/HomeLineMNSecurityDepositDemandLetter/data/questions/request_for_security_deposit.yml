@@ -234,8 +234,14 @@ fields:
     min: 0
 ---
 id: Lease rate Q
+terms: 
+  lease interest rate: |
+    temp lang
+  legally required default: |
+    Since August 1, 2003, it has been set a 1 percent simple interest. For example, if there is a deposit of $500, the interest for one year is five dollars. If the tenant is in the place for two years, it is $10; it does not compound (the interest from past years is not included in the calculation for future years).
 question: |
-  Check your lease for the interest rate on your security deposit. Most leases will not. If your lease does not, this form will use the legally required default 
+  Check your lease for the interest rate on your security deposit. Most leases will not. If your lease does not, this form will use the {legally required default}
+    {lease interest rate}
 fields:
   - "The lease has security deposit interest rate": lease_rate_know
     datatype: yesnoradio
