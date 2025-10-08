@@ -12,7 +12,7 @@ metadata:
   can_I_use_this_form: |
     If you are a _____________, you can use this interview to ____________.
   before_you_start: |
-    This interview will help you write a Request for security deposit.
+    This interview will help you write .
     
     Before you get started, please gather:
     
@@ -120,9 +120,15 @@ code: |
 id: Request_for_security_deposit
 continue button field: request_for_security_deposit_intro
 question: |
-  Request for security deposit
+  Request for security deposit Minnesota 
 subquestion: |
-  This interview will help you write a Request for security deposit.
+  This interview will help you write a letter to request your security deposit.
+  
+  If you are or were a tenant in Minnesota who has:
+ 
+  1. not been given you security deposit back
+  2. received an explantion for why you have not been given your security deposit back
+  you can use this interview to demand your landlord give you your security deposit back with interest.
   
   Before you get started, please gather:
   
@@ -135,7 +141,7 @@ subquestion: |
   2. Deliver a copy of this letter by first class mail to the landlord
   3. If the landlord does not answer your letter within 30 days, call HOME Line at 866-866-3546, and a tenant advocate will discuss other options.
 
-  If you are a tenant who has not been given you security deposit back, or received an explantion for why you have not been given your security deposit back, you can use this interview to demand your landlord give you your security deposit back with interest.
+  
 
   Most people take about 5 minutes to complete this interview.
 ---
