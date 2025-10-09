@@ -26,9 +26,9 @@ metadata:
   estimated_completion_minutes: 10
   estimated_completion_delta: 5
   LIST_topics: 
-    - "HO-00-00-00-00"
+    - "HO-06-01-00-00"
   tags:
-    - "HO-00-00-00-00"
+    - "HO-06-01-00-00"
   authors:
     - Conner
   original_form: []
@@ -219,7 +219,7 @@ fields:
 ---
 id: When did you move into the rental?
 question: |
-  When did your lease start ${ rental_address.address }?
+  When did your lease start at ${ rental_address.address }?
 fields:
   - "Lease began on": move_in
     datatype: date
@@ -230,6 +230,8 @@ question: |
 fields:
   - "Lease ended on": move_out
     datatype: date
+    min: |
+      ${ move_in }
 ---
 id: pay for sec depo
 question: |
