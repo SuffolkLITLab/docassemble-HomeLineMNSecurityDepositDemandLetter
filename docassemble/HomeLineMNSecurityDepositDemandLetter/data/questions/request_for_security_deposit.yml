@@ -124,15 +124,16 @@ question: |
 subquestion: |
   This interview will help you write a letter to request your security deposit.
   
-  If you are or were a tenant in Minnesota who has:
+  If you are or were a tenant in Minnesota who has either:
  
-  1. not been given you security deposit back
-  2. received an explantion for why you have not been given your security deposit back
-  you can use this interview to demand your landlord give you your security deposit back with interest.
+  1. Not been given you security deposit back
+  2. Received an explantaion for why you have not been given your security deposit back
+  
+  You can use this interview to demand your landlord give you your security deposit back with interest.
   
   Before you get started, please gather:
   
-  1. A copy of your lease you want your security deposit back from.
+  1. A copy of your lease you want your security deposit back from
   2. Your landlords mailing address
   
   When you are finished, you will need to:
@@ -243,13 +244,16 @@ fields:
 ---
 id: Lease rate Q
 terms: 
-  lease interest rate: |
-    temp lang
+  interest rate: |
+    The amount that helps decide how much more money byu will receive back.
   legally required default: |
-    Since August 1, 2003, it has been set a 1 percent simple interest. For example, if there is a deposit of $500, the interest for one year is five dollars. If the tenant is in the place for two years, it is $10; it does not compound (the interest from past years is not included in the calculation for future years).
+    Since August 1, 2003, a 1 percent simple interest has been set. For example, if there is a deposit of $500, the interest for one year is five dollars. If the tenant is in the place for two years, it is $10. The interest from past years is not included in the calculation for future years.
 question: |
-  Check your lease for the interest rate on your security deposit. Most leases will not. If your lease does not, this form will use the {legally required default}
-    {lease interest rate}
+  Interest rate information
+subquestion: |
+  Most leases will not tell you an {interest rate}.
+  If your lease does not, this form will use the {legal default}.
+  
 fields:
   - "The lease has security deposit interest rate": lease_rate_know
     datatype: yesnoradio
@@ -262,19 +266,16 @@ code: |
       return val/100 if val else 0.01
 
   final_rate = rate_value(lease_rate if lease_rate_know else None)
-
-  months = 0
+  months_count = 0
   d = move_in
   while d < move_out:
-      months += 1
+      months_count += 1
       d = d.replace(month=d.month + 1 if d.month < 12 else 1, year=d.year if d.month < 12 else d.year + 1)
 
-  total = security_deposit_value
-  for i in range(months):
-      total *= (1 + final_rate)
-
-  interest_earned = total - security_deposit_value
-  security_deposit_value_interest = total
+  monthly_rate = final_rate / 12
+  interest_earned = security_deposit_value * monthly_rate * months_count
+  security_deposit_value_interest = security_deposit_value + interest_earned
+  
 
 ---
 id: interest_display
