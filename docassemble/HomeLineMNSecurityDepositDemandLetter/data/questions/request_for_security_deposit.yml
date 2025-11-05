@@ -1,6 +1,8 @@
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
+  - docassemble.MassAccess:massaccess.yml
+  - docassemble.MassAppealsCourt:appeals-basic-questions.yml
 ---
 metadata:
   title: >-
