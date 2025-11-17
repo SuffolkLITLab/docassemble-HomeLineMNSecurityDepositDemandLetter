@@ -95,6 +95,9 @@ id: interview_order_request_for_security_deposit
 code: |
   # Set the allowed courts for this interview
   nav.set_section("review_request_for_security_deposit")
+  not_depo
+  if (not_depo == False or not_expla == False):
+    kick_out_cannot_use
   user_role = "plaintiff"
   user_ask_role = "plaintiff"
   users.gather()
@@ -146,7 +149,7 @@ subquestion: |
 
   **If you are or were a tenant in Minnesota who has:**
  
-  1. Not been given your security deposit back; and
+  1. Not been given your security deposit back; **and**
   2. Have not received an explanation for why you have not been given your security deposit back.
   
   **You can use this interview to demand that your landlord give you your security deposit back.** 
@@ -162,11 +165,32 @@ subquestion: |
   
   1. Review the letter one more time, fix any mistakes.
   2. Deliver a copy of this letter by first class mail to the landlord.
-  3. If the landlord does not answer your letter within 30 days, call HOME Line at 866-866-3546. A tenant advocate will discuss other options.
+  3. If the landlord does not answer your letter within 30 days, call the nonprofit Minnesota tenant advocacy organnization, **HOME Line** at 866-866-3546. A tenant advocate will discuss other options.
 
   
 
   **Most people take about 10 minutes to complete this interview.**
+---
+id: right form
+question: | 
+  Is this the right form for you?
+fields:
+  - I have not received my security deposit: not_depo
+    datatype: yesnoradio
+    required: True
+  - I have not received an explantion for how the landlord used the deposit: not_expla
+    datatype: yesnoradio
+    required: True
+  
+---
+event: kick_out_cannot_use
+id: kickout
+question: |
+  This form is not right for you. 
+subquestion: |
+ % if not_depo == False or not_expla == False:
+ In order to use this form you must have not received your security deposit **and** have not received a explantion for what the deposit was used for.
+ % endif
 ---
 id: any other users
 question: |
