@@ -95,9 +95,7 @@ id: interview_order_request_for_security_deposit
 code: |
   # Set the allowed courts for this interview
   nav.set_section("review_request_for_security_deposit")
-  not_depo
-  if (not_depo == False or not_expla == False):
-    kick_out_cannot_use
+  eligibility_check_complete
   user_role = "plaintiff"
   user_ask_role = "plaintiff"
   users.gather()
@@ -147,50 +145,57 @@ question: |
   Write a request for security deposit letter in Minnesota. 
 subquestion: |
 
-  **If you are or were a tenant in Minnesota who has:**
- 
-  1. Not been given your security deposit back; **and**
-  2. Have not received an explanation for why you have not been given your security deposit back.
-  
-  **You can use this interview to demand that your landlord give you your security deposit back.** 
+ If your landlord in Minnesota hasn't returned your security deposit or told you why they kept it, this tool will help you write a letter demanding your money back.
 
 
+  **Before you get started:**
   
-  **Before you get started, please gather:**
-  
-  1. A copy of your lease from which you want your security deposit back.
-  2. Your landlords' mailing address.
+  1. You need your landlords' mailing address..
+  2. A copy of your lease will be helpful
   
   **When you are finished, you will need to:**
   
   1. Review the letter one more time, fix any mistakes.
-  2. Deliver a copy of this letter by first class mail to the landlord.
+  2. Deliver a copy of this letter by first class mail to the landlord, first class mail is normal mail for everyday items like letters.
   3. If the landlord does not answer your letter within 30 days, call the nonprofit Minnesota tenant advocacy organnization, **HOME Line** at 866-866-3546. A tenant advocate will discuss other options.
 
   
 
   **Most people take about 10 minutes to complete this interview.**
 ---
-id: right form
+id: received deposit
 question: | 
-  Is this the right form for you?
+  Have you received your security deposit back?
 fields:
-  - I have not received my security deposit: not_depo
+  - no label: received_deposit
     datatype: yesnoradio
     required: True
-  - I have not received an explantion for how the landlord used the deposit: not_expla
+---
+id: received explanation
+question: |
+  Have you received an explanation for how the landlord used the deposit?
+fields:
+  - no label: received_explanation
     datatype: yesnoradio
     required: True
-  
+---
+code: |
+  if received_deposit:
+    kick_out_cannot_use
+  if received_explanation:
+    kick_out_cannot_use
+  eligibility_check_complete = True
 ---
 event: kick_out_cannot_use
 id: kickout
 question: |
   This form is not right for you. 
 subquestion: |
- % if not_depo == False or not_expla == False:
- In order to use this form you must have not received your security deposit **and** have not received a explantion for what the deposit was used for.
- % endif
+  % if received_deposit:
+  You indicated that you have already received your security deposit back. This form is for tenants who have **not** received their deposit.
+  % elif received_explanation:
+  You indicated that you have received an explanation for how your deposit was used. This form is for tenants who have **not** received either their deposit **or** an explanation.
+  % endif
 ---
 id: any other users
 question: |
@@ -212,6 +217,7 @@ question: |
   What is the address of the rental you want your deposit back from?
 fields:
   - Street address: rental_address.address
+    address autocomplete: True
   - Apartment: rental_address.unit
     required: false
   - City: rental_address.city
