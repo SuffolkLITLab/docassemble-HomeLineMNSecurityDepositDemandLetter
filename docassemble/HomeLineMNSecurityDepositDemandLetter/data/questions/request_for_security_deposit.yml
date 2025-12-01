@@ -12,7 +12,7 @@ metadata:
   description: |-
     This interview helps someone in Minnesota write a Request for security deposit.
   can_I_use_this_form: |
-    If you are a tenant from Minnesota who is owned a security deposit, you can use this interview to demand the security deposit is returned.
+   If your landlord in Minnesota hasn't returned your security deposit or told you why they kept it, this tool will help you write a letter demanding your money back.
   before_you_start: |
     Write a request for security deposit letter in Minnesota. 
   
@@ -26,14 +26,14 @@ metadata:
   
     Before you get started, please gather:
   
-    1. A copy of your lease you want your security deposit back from
-    2. Your landlords mailing address
+    1. You need your landlords' mailing address.
+    2. A copy of your lease will be helpful
   
     When you are finished, you will need to:
   
     1. Review the letter one more time, fix any mistakes.
-    2. Deliver a copy of this letter by first class mail to the landlord
-    3. If the landlord does not answer your letter within 30 days, call HOME Line at 866-866-3546. A tenant advocate will discuss other options
+    2. Deliver a copy of this letter by first class mail to the landlord, first class mail is normal mail for everyday items like letters.
+    3. If the landlord does not answer your letter within 30 days, call the nonprofit Minnesota tenant advocacy organnization, **HOME Line** at 866-866-3546. A tenant advocate will discuss other options.
 
   
 
@@ -48,7 +48,8 @@ metadata:
     - "HO-06-01-00-00"
   authors:
     - Conner
-  original_form: []
+  original_form: |
+    [https://homelinemn.org/wp-content/uploads/Security-Deposit-Request-Form-Ltr_HOMLin_09-10.pdf]
   original_form_published_on: ""
   allowed_courts: []
   typical_role: "plaintiff"
@@ -150,7 +151,7 @@ subquestion: |
 
   **Before you get started:**
   
-  1. You need your landlords' mailing address..
+  1. You need your landlords' mailing address.
   2. A copy of your lease will be helpful
   
   **When you are finished, you will need to:**
@@ -292,7 +293,7 @@ fields:
 id: Lease rate Q
 terms: 
   interest rate: |
-    The interest rate is the number used to calculate how much more money you will receive back. The number will be listed as a whole number. A 1% interest rate means we multiply the deposit by .01% and add that back to the deposit total. 
+    The interest rate is the number used to calculate how much more money you will receive back. The number will be listed as a whole number. A 1% interest rate means we multiply the deposit by .01 and add that back to the deposit total. 
   legal default: |
     Since August 1, 2003, a 1 percent simple interest has been set. For example, if there is a deposit of $500, the interest for one year is five dollars. If the tenant is in the place for two years, it is $10. The interest from past years is not included in the calculation for future years.
 question: |
@@ -303,7 +304,7 @@ subquestion: |
 fields:
   - "": lease_rate_know
     datatype: yesnoradio
-  - Lease rate: lease_rate
+  - Lease rate number without percent sign: lease_rate
     datatype: number
     show if: lease_rate_know
 ---
@@ -319,7 +320,7 @@ code: |
       d = d.replace(month=d.month + 1 if d.month < 12 else 1, year=d.year if d.month < 12 else d.year + 1)
 
   monthly_rate = final_rate / 12
-  interest_earned = security_deposit_value * monthly_rate * months_count
+  interest_earned = round(security_deposit_value * monthly_rate * months_count, 2)
   security_deposit_value_interest = security_deposit_value + interest_earned
   
 
