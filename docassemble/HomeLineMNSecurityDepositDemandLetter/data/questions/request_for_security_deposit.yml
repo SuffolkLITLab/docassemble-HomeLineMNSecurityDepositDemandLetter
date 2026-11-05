@@ -12,36 +12,36 @@ metadata:
   description: |-
     This interview helps someone in Minnesota write a Request for security deposit.
   can_I_use_this_form: |
-   If your landlord in Minnesota hasn't returned your security deposit or told you why they kept it, this tool will help you write a letter demanding your money back.
+    If your landlord in Minnesota hasn't returned your security deposit or told you why they kept it, this tool will help you write a letter demanding your money back.
   before_you_start: |
-  
-    If you are or were a tenant in Minnesota who:
- 
-    1. Not been given you rsecurity deposit back, and
-    2. Have not recieved an explantaion for why you have not been given your security deposit back
-  
-    You can use this interview to demand ythat our landlord give you your security deposit back.
 
-  
+    If you are or were a tenant in Minnesota who:
+
+    1. Have not received your security deposit back, and
+    2. Have not received an explanation for why you have not been given your security deposit back
+
+    You can use this interview to demand that your landlord give you your security deposit back.
+
+
     Before you get started, please gather:
-  
-    1. You need your landlords'smailing address.
+
+    1. You need your landlord’s mailing address.
     2. A copy of your lease will be helpful
-  
+
     When you are finished, you will need to:
-  
+
     1. Review the letter one more time, fix any mistakes.
     2. Deliver a copy of this letter by first-class mail to the landlord. First-class mail is normal mail for everyday items like letters.
     3. If the landlord does not answer your letter within 30 days, call the nonprofit Minnesota tenant advocacy organization, **HOME Line** at 866-866-3546. A tenant advocate will discuss other options.
 
-  
+
 
     Most people take about 10 minutes to complete this interview.
 
   maturity: production
   estimated_completion_minutes: 10
   estimated_completion_delta: 5
-  LIST_topics: 
+  LIST_topics:
     - "HO-06-01-00-00"
   tags:
     - "HO-06-01-00-00"
@@ -78,7 +78,7 @@ code: |
   interview_short_title = "Write a Request for security deposit"
 ---
 code: |
-  al_form_type = "letter" 
+  al_form_type = "letter"
 ---
 objects:
   - other_parties: ALPeopleList.using(ask_number=True,target_number=1)
@@ -142,29 +142,29 @@ code: |
 id: Request_for_security_deposit
 continue button field: request_for_security_deposit_intro
 question: |
-  Write a request for security deposit letter in Minnesota. 
+  Write a request for security deposit letter in Minnesota.
 subquestion: |
 
  If your landlord in Minnesota hasn't returned your security deposit or told you why they kept it, this tool will help you write a letter demanding your money back.
 
 
   **Before you get started:**
-  
+
   1. You need your landlords' mailing address.
   2. A copy of your lease will be helpful
-  
+
   **When you are finished, you will need to:**
-  
+
   1. Review the letter one more time, fix any mistakes.
   2. Deliver a copy of this letter by first class mail to the landlord. First class mail is normal mail for everyday items like letters.
   3. If the landlord does not answer your letter within 30 days, call the nonprofit Minnesota tenant advocacy organization, **HOME Line** at 866-866-3546. A tenant advocate will discuss other options.
 
-  
+
 
   **Most people take about 10 minutes to complete this interview.**
 ---
 id: received deposit
-question: | 
+question: |
   Have you received your security deposit back?
 fields:
   - no label: received_deposit
@@ -189,7 +189,7 @@ code: |
 event: kick_out_cannot_use
 id: kickout
 question: |
-  This form is not right for you. 
+  This form is not right for you.
 subquestion: |
   % if received_deposit:
   You indicated that you have already received your security deposit back. This form is for tenants who have **not** received their deposit.
@@ -205,7 +205,7 @@ question: |
   Are any other tenants adding their name to this letter with you?
   % endif
 subquestion: |
-  % if len(users.elements) > 1:  
+  % if len(users.elements) > 1:
   So far you have told us about ${comma_and_list(users.complete_elements())}.
   % endif
 fields:
@@ -243,7 +243,7 @@ fields:
     choices:
       - users[0].address if defined("users[0].address.address") else None
     object labeler: |
-      lambda y: y.on_one_line()      
+      lambda y: y.on_one_line()
     none of the above: |
       Somewhere else
     disable others: True
@@ -290,18 +290,18 @@ fields:
     min: 0
 ---
 id: Lease rate Q
-terms: 
+terms:
   interest rate: |
-    The interest rate is the number used to calculate how much more money you will receive back. The number will be listed as a whole number. A 1% interest rate means we multiply the deposit by .01 and add that back to the deposit total. 
+    The interest rate is the number used to calculate how much more money you will receive back. The number will be listed as a whole number. A 1% interest rate means we multiply the deposit by .01 and add that back to the deposit total.
   legal default: |
     Since August 1, 2003, a 1 percent simple interest has been set. For example, if there is a deposit of $500, the interest for one year is five dollars. If the tenant is in the place for two years, it is $10. The interest from past years is not included in the calculation for future years.
 question: |
   Is there a security deposit interest rate listed in your lease?
 subquestion: |
   Most leases will not tell you a different {interest rate} than the {legal default} of 1%.
-  
+
 fields:
-  - "": lease_rate_know
+  - "Does your lease list a security deposit interest rate?": lease_rate_know
     datatype: yesnoradio
   - Lease rate number without percent sign: lease_rate
     datatype: number
@@ -321,7 +321,7 @@ code: |
   monthly_rate = final_rate / 12
   interest_earned = round(security_deposit_value * monthly_rate * months_count, 2)
   security_deposit_value_interest = security_deposit_value + interest_earned
-  
+
 
 ---
 id: interest_display
@@ -346,17 +346,17 @@ id: preview request_for_security_deposit
 question: |
   Preview your form before you sign it
 subquestion: |
-  Here is a preview of the form you will sign on the next page.   
-  
+  Here is a preview of the form you will sign on the next page.
+
   ${ al_recipient_bundle.as_pdf(key='preview') }
 
   Click the image to open it in a new tab. Click the "Edit answers" button
   to edit your answers.
 
   ${ action_button_html(url_action('review_request_for_security_deposit'), label='Edit answers', color='info') }
-  
+
   Remember to come back to this window to continue and sign your form.
-continue button field: request_for_security_deposit_preview_question    
+continue button field: request_for_security_deposit_preview_question
 ---
 code: |
   signature_fields = ['users[0].signature']
@@ -402,6 +402,7 @@ review:
       ${ currency(security_deposit_value_interest) }
 ---
 continue button field: other_parties.revisit
+id: "edit other parties"
 question: |
   Edit other_parties
 subquestion: |
@@ -423,6 +424,7 @@ confirm: True
 
 ---
 continue button field: users.revisit
+id: "edit users"
 question: |
   Edit users
 subquestion: |
@@ -452,14 +454,14 @@ question: |
   All done
 subquestion: |
   Thank you ${users}. Your form is ready to download and deliver.
-  
+
   View, download and send your form below. Click the "Edit answers" button to fix any mistakes.
 
   ${ action_button_html(url_action('review_request_for_security_deposit'), label='Edit answers', color='info') }
-  
-  
+
+
   ${ al_user_bundle.download_list_html() }
-  
+
 
   ${ al_user_bundle.send_button_html(show_editable_checkbox=True) }
 
@@ -475,8 +477,8 @@ objects:
   - al_user_bundle: ALDocumentBundle.using(elements=[request_for_security_deposit_Post_interview_instructions, request_for_security_deposit_attachment], filename="request_for_security_deposit", title="All forms to download for your records", enabled=True)
   - al_recipient_bundle: ALDocumentBundle.using(elements=[request_for_security_deposit_attachment],  filename="request_for_security_deposit", title="All forms to file", enabled=True)
 ---
-# Each attachment defines a key in an ALDocument. We use `i` as the placeholder here so the same template is 
-# used for "preview" and "final" keys, and logic in the template checks the value of 
+# Each attachment defines a key in an ALDocument. We use `i` as the placeholder here so the same template is
+# used for "preview" and "final" keys, and logic in the template checks the value of
 # `i` to show or hide the user's signature
 attachment:
   name: Post-interview-Instructions
