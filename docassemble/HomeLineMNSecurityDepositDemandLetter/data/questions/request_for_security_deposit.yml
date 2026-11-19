@@ -3,17 +3,17 @@ include:
   - docassemble.AssemblyLine:assembly_line.yml
 ---
 metadata:
-  title: >-
-    Write a request for security deposit in Minnesota
-  short title: >-
-    Request for security deposit
-  description: |-
-    Ask a Minnesota landlord to return a security deposit and any interest owed.
+  title: Ask for your Minnesota security deposit back
+  short title: Request for security deposit
+  description: >-
+    Write a letter asking your Minnesota landlord to return your security deposit and any interest owed.
+    Use this letter if your landlord kept the full deposit and gave you no written explanation.
   can_I_use_this_form: |
-    Use this letter to ask for your deposit back if your Minnesota landlord has kept it without an explanation.
+    Use this letter if you moved out of a Minnesota rental and your landlord kept your full deposit.
+    If your landlord sent an explanation or returned part of the money, see HOME Line’s guide.
   before_you_start: |
-    Gather your landlord’s mailing address, your deposit amount, and your lease if you have it.
-    Check [HOME Line’s security deposit guidance](https://homelinemn.org/form-letters/security-deposits/) before you send this letter.
+    Find your landlord’s mailing address and the amount you paid for the deposit.
+    Give your landlord your forwarding address. Use HOME Line’s guide to check when the deposit is due.
   when_you_are_finished: |
     Review the letter. Keep a copy and mail the letter to your landlord.
     If you do not hear back within 30 days, call HOME Line at 866-866-3546.
@@ -26,8 +26,9 @@ metadata:
     - "HO-06-01-00-00"
   authors:
     - Conner
-  original_form: |
-    https://homelinemn.org/form-letters/security-deposits/
+  original_form: https://homelinemn.org/wp-content/uploads/Security-Deposit-Request-Form-Ltr_HOMLin_09-10.pdf
+  help_page_title: HOME Line’s security deposit guide
+  help_page_url: https://homelinemn.org/form-letters/security-deposits/
   original_form_published_on: ""
   allowed_courts: []
   al_weaver_version: "1.11.0"
