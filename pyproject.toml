@@ -14,6 +14,7 @@ authors = [
 ]
 dependencies = [
     "docassemble.AssemblyLine>=4.9.0",
+    "docassemble.HOMELineTheme @ git+https://github.com/SuffolkLITLab/docassemble-HOMELineTheme.git@982ed42168856256e754088c2f83ae2457d90181",
 ]
 
 [project.urls]
